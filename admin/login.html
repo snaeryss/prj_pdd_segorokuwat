@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Login Admin — Segorokuwat</title>
+  <meta name="description" content="Halaman masuk panel admin Segorokuwat." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/images/logo.png" type="image/png" />
+
+  <!-- Admin stylesheet -->
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+
+<body class="login-body">
+
+  <!-- ═══════════════════════════════════════════
+       LOGIN CARD
+  ════════════════════════════════════════════ -->
+  <main class="login-card" role="main">
+
+    <!-- Logo -->
+    <a href="../index.html" class="login-logo" aria-label="Kembali ke halaman utama Segorokuwat">
+      <img src="../assets/images/logo.png" alt="Logo Segorokuwat" />
+      <span class="login-logo-text">Segorokuwat</span>
+    </a>
+
+    <!-- Headings -->
+    <h1 class="login-title">Masuk ke Panel Admin</h1>
+    <p class="login-subtitle">Gunakan akun admin yang telah didaftarkan.</p>
+
+    <!-- Error message (ditampilkan saat login gagal) -->
+    <div class="login-error" id="login-error" role="alert" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+      <span id="login-error-text"></span>
+    </div>
+
+    <!-- Form -->
+    <form id="login-form" novalidate>
+
+      <!-- Email -->
+      <div class="login-form-group">
+        <label class="login-label" for="login-email">Alamat Email</label>
+        <input
+          class="login-input"
+          type="email"
+          id="login-email"
+          name="email"
+          placeholder="admin@segorokuwat.id"
+          autocomplete="email"
+          autocapitalize="none"
+          spellcheck="false"
+          required
+        />
+      </div>
+
+      <!-- Password + eye toggle -->
+      <div class="login-form-group">
+        <label class="login-label" for="login-password">Password</label>
+        <div class="login-input-wrap">
+          <input
+            class="login-input"
+            type="password"
+            id="login-password"
+            name="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+          />
+          <button
+            type="button"
+            class="eye-toggle"
+            id="eye-toggle"
+            aria-label="Tampilkan atau sembunyikan password"
+            title="Tampilkan password"
+          >
+            <!-- Eye icon (default: show) -->
+            <svg id="icon-eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <!-- Eye-off icon (hidden by default) -->
+            <svg id="icon-eye-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true" style="display:none">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+              <line x1="1" y1="1" x2="23" y2="23" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn-login" id="btn-login">
+        <div class="btn-spinner" aria-hidden="true"></div>
+        <span class="btn-label">Masuk ke Dashboard</span>
+      </button>
+
+    </form>
+
+    <!-- Divider -->
+    <hr class="login-divider" />
+
+    <!-- Back link -->
+    <a href="../index.html" class="login-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="19" y1="12" x2="5" y2="12" />
+        <polyline points="12 19 5 12 12 5" />
+      </svg>
+      Kembali ke halaman utama
+    </a>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/auth.js"></script>
+
+  <script>
+    // ── UI helpers ────────────────────────────────────────────────
+    const form      = document.getElementById('login-form');
+    const emailInput = document.getElementById('login-email');
+    const pwInput   = document.getElementById('login-password');
+    const btn       = document.getElementById('btn-login');
+    const errorBox  = document.getElementById('login-error');
+    const errorText = document.getElementById('login-error-text');
+    const eyeBtn    = document.getElementById('eye-toggle');
+    const iconShow  = document.getElementById('icon-eye-show');
+    const iconHide  = document.getElementById('icon-eye-hide');
+
+    function showError(msg) {
+      errorText.textContent = msg;
+      errorBox.removeAttribute('hidden');
+    }
+
+    function hideError() {
+      errorBox.setAttribute('hidden', '');
+      errorText.textContent = '';
+    }
+
+    function setLoading(on) {
+      btn.disabled = on;
+      btn.classList.toggle('loading', on);
+    }
+
+    function markInvalid(input) {
+      input.classList.add('is-invalid');
+    }
+
+    function clearInvalid(input) {
+      input.classList.remove('is-invalid');
+    }
+
+    // ── Password toggle ───────────────────────────────────────────
+    eyeBtn.addEventListener('click', () => {
+      const isPassword = pwInput.type === 'password';
+      pwInput.type = isPassword ? 'text' : 'password';
+      iconShow.style.display = isPassword ? 'none'  : '';
+      iconHide.style.display = isPassword ? ''      : 'none';
+      eyeBtn.title = isPassword ? 'Sembunyikan password' : 'Tampilkan password';
+    });
+
+    // Hide error saat user mulai mengetik ulang
+    emailInput.addEventListener('input', () => { hideError(); clearInvalid(emailInput); });
+    pwInput.addEventListener('input',   () => { hideError(); clearInvalid(pwInput); });
+
+    // ── Redirect jika sudah login ─────────────────────────────────
+    (async () => {
+      try {
+        await Auth.redirectIfAuthenticated();
+      } catch {
+        // Supabase belum siap — tetap tampilkan form
+      }
+    })();
+
+    // ── Form submit ───────────────────────────────────────────────
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const email = emailInput.value.trim();
+      const password = pwInput.value;
+
+      // Client-side validation
+      let hasError = false;
+      if (!email) {
+        markInvalid(emailInput);
+        hasError = true;
+      }
+      if (!password) {
+        markInvalid(pwInput);
+        hasError = true;
+      }
+      if (hasError) {
+        showError('Email dan password harus diisi.');
+        emailInput.focus();
+        return;
+      }
+
+      // Attempt login
+      setLoading(true);
+      try {
+        await Auth.login(email, password);
+        // Sukses — redirect ke dashboard
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        showError(err.message || 'Gagal masuk. Silakan coba lagi.');
+        setLoading(false);
+        pwInput.value = '';
+        pwInput.focus();
+        markInvalid(emailInput);
+        markInvalid(pwInput);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
