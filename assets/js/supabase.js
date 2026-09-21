@@ -13,17 +13,17 @@ const SUPABASE_URL = 'https://wgtsezmyksahjbaqdxci.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_TVam1hketS0jiRv59Hb-uA_LnAKiyp8';
 
 // ── Initialize Client ──
-let supabase;
+let supabaseClient;
 
 function initSupabase() {
   if (!window.supabase) {
     console.error('Supabase JS library not loaded. Make sure to include the CDN script.');
     return null;
   }
-  if (!supabase) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  if (!supabaseClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
-  return supabase;
+  return supabaseClient;
 }
 
 // ── Auth Helpers ──
