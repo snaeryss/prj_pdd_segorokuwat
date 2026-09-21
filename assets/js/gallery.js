@@ -1,4 +1,4 @@
-﻿/**
+/**
  * gallery.js — Galeri & Struktur Arsip
  * Segorokuwat Website — Phase 3
  *
@@ -134,7 +134,7 @@ function renderYearFilter(years) {
     pill.addEventListener('click', () => {
       const yearId  = pill.dataset.yearId  || null;
       const yearNum = pill.dataset.yearNum || null;
-      setYear(yearId ? parseInt(yearId) : null, yearNum ? parseInt(yearNum) : null);
+      setYear(yearId || null, yearNum ? parseInt(yearNum) : null);
     });
   });
 }
