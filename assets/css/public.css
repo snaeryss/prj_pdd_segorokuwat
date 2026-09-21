@@ -1055,3 +1055,300 @@
         justify-content: center;
     }
 }
+
+
+/* ============================================
+   GALLERY PAGE
+   ============================================ */
+
+/* ── Page Header (abu-abu terang, bukan hero gelap) ── */
+.gallery-page-header {
+    background: var(--pub-gray-subtle);
+    padding: calc(var(--pub-nav-height) + 2.5rem) 0 2rem;
+    border-bottom: 1px solid var(--pub-border-light);
+}
+
+.gallery-page-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.gallery-page-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-primary);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--pub-accent-dark);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+}
+
+.gallery-page-title {
+    font-family: var(--font-primary);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--pub-black);
+    margin: 0 0 0.4rem;
+    line-height: 1.15;
+}
+
+.gallery-page-desc {
+    font-size: 0.9rem;
+    color: var(--pub-gray);
+    margin: 0 0 1.25rem;
+    line-height: 1.6;
+}
+
+/* ── Breadcrumb ── */
+.gallery-breadcrumb {
+    margin-top: 0.25rem;
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.78rem;
+    color: var(--pub-gray);
+}
+
+.breadcrumb-list li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-list a {
+    color: var(--pub-gray);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.breadcrumb-list a:hover {
+    color: var(--pub-black);
+}
+
+.breadcrumb-list .breadcrumb-sep {
+    color: var(--pub-gray-light);
+    font-size: 0.7rem;
+    user-select: none;
+}
+
+.breadcrumb-list [aria-current="page"] {
+    color: var(--pub-black);
+    font-weight: 600;
+}
+
+/* ── Gallery Main Section ── */
+.gallery-main {
+    background: var(--pub-white);
+    padding: 2.5rem 0 var(--pub-section-pad);
+}
+
+.gallery-main-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ── Year Filter Pills ── */
+.year-filter-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+}
+
+.year-filter-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--pub-gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.year-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.year-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.9rem;
+    font-family: var(--font-primary);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--pub-gray);
+    background: var(--pub-white);
+    border: 1px solid var(--pub-border-light);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.year-pill:hover {
+    color: var(--pub-black);
+    border-color: #aaaaaa;
+    background: var(--pub-gray-subtle);
+}
+
+.year-pill.active {
+    background: var(--pub-black);
+    color: var(--pub-white);
+    border-color: var(--pub-black);
+}
+
+.year-pill.active:hover {
+    background: var(--pub-black-deep);
+    border-color: var(--pub-black-deep);
+    color: var(--pub-white);
+}
+
+/* ── Gallery Summary ── */
+.gallery-summary {
+    font-size: 0.8125rem;
+    color: var(--pub-gray);
+    margin-bottom: 1.5rem;
+    min-height: 1.2em;
+    transition: opacity var(--transition-fast);
+}
+
+.gallery-summary strong {
+    color: var(--pub-black);
+    font-weight: 600;
+}
+
+/* ── Load More ── */
+.gallery-load-more {
+    text-align: center;
+    padding-top: 2.5rem;
+}
+
+.btn-load-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background: transparent;
+    color: var(--pub-black);
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid var(--pub-black);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-load-more:hover:not(:disabled) {
+    background: var(--pub-black);
+    color: var(--pub-white);
+}
+
+.btn-load-more:disabled,
+.btn-load-more.loading {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-load-more svg {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--transition-fast);
+}
+
+.btn-load-more:hover:not(:disabled) svg {
+    transform: translateY(2px);
+}
+
+.gallery-load-more.hidden {
+    display: none;
+}
+
+.gallery-all-shown {
+    display: inline-block;
+    font-size: 0.8125rem;
+    color: var(--pub-gray);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* ── Empty State (gallery) ── */
+.gallery-empty {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1rem;
+    text-align: center;
+    color: var(--pub-gray);
+}
+
+.gallery-empty svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.25;
+    margin-bottom: 1rem;
+}
+
+.gallery-empty h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #888;
+    margin: 0 0 0.5rem;
+}
+
+.gallery-empty p {
+    font-size: 0.875rem;
+    max-width: 320px;
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* ── Responsive — Gallery Page ── */
+@media (max-width: 768px) {
+    .gallery-page-header {
+        padding-top: calc(var(--pub-nav-height) + 1.5rem);
+        padding-bottom: 1.5rem;
+    }
+
+    .gallery-page-header-inner,
+    .gallery-main-inner {
+        padding: 0 1.25rem;
+    }
+
+    .year-filter-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .year-filter {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.25rem;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .year-filter::-webkit-scrollbar {
+        display: none;
+    }
+}
