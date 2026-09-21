@@ -23,29 +23,29 @@ const GDrive = {
    */
   extractFileId(url) {
     if (!url || typeof url !== 'string') return null;
-    
+
     url = url.trim();
-    
+
     // Pattern: /file/d/FILE_ID/
     const filePattern = /\/file\/d\/([a-zA-Z0-9_-]+)/;
     const fileMatch = url.match(filePattern);
     if (fileMatch) return fileMatch[1];
-    
+
     // Pattern: ?id=FILE_ID or &id=FILE_ID
     const idPattern = /[?&]id=([a-zA-Z0-9_-]+)/;
     const idMatch = url.match(idPattern);
     if (idMatch) return idMatch[1];
-    
+
     // Pattern: lh3.googleusercontent.com/d/FILE_ID
     const lh3Pattern = /lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/;
     const lh3Match = url.match(lh3Pattern);
     if (lh3Match) return lh3Match[1];
-    
+
     // If it looks like a bare file ID (alphanumeric + underscore/hyphen, 20+ chars)
     if (/^[a-zA-Z0-9_-]{20,}$/.test(url)) {
       return url;
     }
-    
+
     return null;
   },
 
@@ -59,11 +59,11 @@ const GDrive = {
    */
   getImageUrl(url, size = 'l') {
     if (!url) return '';
-    
+
     // If it's not a Google Drive URL, return as-is (could be a direct image URL)
     const fileId = this.extractFileId(url);
     if (!fileId) return url;
-    
+
     // Use lh3.googleusercontent.com for the best compatibility
     // This endpoint supports size parameters via =s{pixels}
     const sizeMap = {
@@ -73,13 +73,13 @@ const GDrive = {
       'xl': 1600, // Extra large / full view
       'full': 0,  // Original size (no size param)
     };
-    
+
     const pixels = sizeMap[size] || sizeMap['l'];
-    
+
     if (pixels === 0) {
       return `https://lh3.googleusercontent.com/d/${fileId}`;
     }
-    
+
     return `https://lh3.googleusercontent.com/d/${fileId}=s${pixels}`;
   },
 
@@ -127,7 +127,7 @@ const GDrive = {
    */
   handleImageError(imgElement, fallbackSrc) {
     if (!imgElement) return;
-    
+
     imgElement.addEventListener('error', function onError() {
       // Prevent infinite loop if fallback also fails
       this.removeEventListener('error', onError);
@@ -145,12 +145,12 @@ const GDrive = {
    */
   processImages(container) {
     if (!container) return;
-    
+
     const images = container.querySelectorAll('img[data-gdrive-url]');
     images.forEach(img => {
       const url = img.getAttribute('data-gdrive-url');
       const size = img.getAttribute('data-gdrive-size') || 'l';
-      
+
       img.src = this.getImageUrl(url, size);
       this.handleImageError(img);
     });

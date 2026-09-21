@@ -329,7 +329,7 @@ const UI = {
         ${actionLabel ? `<button class="btn btn-primary btn-sm mt-md" id="${actionId}">${actionLabel}</button>` : ''}
       </div>
     `;
-    
+
     // Attach action handler after render if needed
     if (actionLabel && onAction) {
       setTimeout(() => {
@@ -337,7 +337,7 @@ const UI = {
         if (btn) btn.addEventListener('click', onAction);
       }, 0);
     }
-    
+
     return html;
   },
 
@@ -364,22 +364,22 @@ const UI = {
 
     let pages = [];
     const maxVisible = 5;
-    
+
     if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       pages.push(1);
-      
+
       let start = Math.max(2, currentPage - 1);
       let end = Math.min(totalPages - 1, currentPage + 1);
-      
+
       if (currentPage <= 3) { start = 2; end = 4; }
       if (currentPage >= totalPages - 2) { start = totalPages - 3; end = totalPages - 1; }
-      
+
       if (start > 2) pages.push('...');
       for (let i = start; i <= end; i++) pages.push(i);
       if (end < totalPages - 1) pages.push('...');
-      
+
       pages.push(totalPages);
     }
 
@@ -389,11 +389,11 @@ const UI = {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         ${pages.map(p => {
-          if (p === '...') {
-            return `<span style="padding:6px 10px; font-size:13px; color:#adb5bd">…</span>`;
-          }
-          return `<button class="btn btn-sm ${p === currentPage ? 'btn-primary' : 'btn-outline-secondary'}" data-page="${p}">${p}</button>`;
-        }).join('')}
+      if (p === '...') {
+        return `<span style="padding:6px 10px; font-size:13px; color:#adb5bd">…</span>`;
+      }
+      return `<button class="btn btn-sm ${p === currentPage ? 'btn-primary' : 'btn-outline-secondary'}" data-page="${p}">${p}</button>`;
+    }).join('')}
         <button class="btn btn-outline-secondary btn-sm" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -440,7 +440,7 @@ const UI = {
     const now = new Date();
     const date = new Date(dateStr);
     const seconds = Math.floor((now - date) / 1000);
-    
+
     if (seconds < 60) return 'Baru saja';
     if (seconds < 3600) return `${Math.floor(seconds / 60)} menit lalu`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)} jam lalu`;

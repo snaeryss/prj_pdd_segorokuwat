@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- SEO -->
+  <title>Segorokuwat — Arsip Dokumentasi Kegiatan</title>
+  <meta name="description"
+    content="Website resmi dokumentasi foto kegiatan Segorokuwat. Jelajahi arsip kegiatan, lomba, kerja bakti, dan berbagai momen bersama warga Segorokuwat." />
+  <meta name="keywords" content="Segorokuwat, dokumentasi, foto kegiatan, arsip, galeri" />
+  <meta name="author" content="Segorokuwat" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Segorokuwat — Arsip Dokumentasi Kegiatan" />
+  <meta property="og:description" content="Jelajahi arsip dokumentasi foto kegiatan Segorokuwat." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="id_ID" />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="assets/images/logo.png" type="image/svg+xml" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/public.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════ -->
+  <nav id="main-navbar" class="navbar-public" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo" aria-label="Segorokuwat — Halaman Utama">
+        <img src="assets/images/logo.png" alt="Logo Segorokuwat" />
+        <span class="nav-logo-text">Segorokuwat</span>
+      </a>
+
+      <!-- Desktop Menu -->
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="nav-link-pub active" id="nav-home">Beranda</a></li>
+        <li><a href="gallery.html" class="nav-link-pub" id="nav-gallery">Dokumentasi</a></li>
+        <li><a href="#tentang" class="nav-link-pub" id="nav-about">Tentang</a></li>
+      </ul>
+
+      <!-- Admin link + Hamburger -->
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-shrink:0;">
+        <a href="admin/login.html" class="nav-admin-link" id="nav-admin" aria-label="Masuk sebagai admin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Admin
+        </a>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Buka menu navigasi" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div id="nav-mobile-menu" class="nav-mobile-menu" role="dialog" aria-label="Menu navigasi mobile">
+    <ul class="nav-mobile-links" role="list">
+      <li><a href="index.html" class="nav-link-pub">Beranda</a></li>
+      <li><a href="gallery.html" class="nav-link-pub">Dokumentasi</a></li>
+      <li><a href="#tentang" class="nav-link-pub">Tentang</a></li>
+    </ul>
+    <div class="nav-mobile-admin">
+      <a href="admin/login.html" class="nav-admin-link" style="font-size:0.8125rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        Masuk sebagai Admin
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════════ -->
+  <section id="hero" class="hero-section" aria-label="Pengantar Segorokuwat">
+
+    <!-- Decorative elements -->
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <div class="hero-container">
+
+      <p class="hero-eyebrow" aria-hidden="true">Arsip Digital Segorokuwat</p>
+
+      <h1 class="hero-title">
+        Dokumentasi Kegiatan<br />
+        Warga <em>Segorokuwat</em>
+      </h1>
+
+      <p class="hero-subtitle">
+        Temukan kembali momen-momen berharga dari berbagai kegiatan
+        bersama warga Segorokuwat — tersimpan rapi, mudah dijelajahi.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="gallery.html" class="btn-hero-primary" id="hero-cta-gallery">
+          Lihat Dokumentasi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+        <a href="#tentang" class="btn-hero-secondary" id="hero-cta-about">
+          Tentang Kami
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats" aria-label="Statistik dokumentasi">
+        <div class="hero-stat-item">
+          <span class="hero-stat-number" id="stat-years">—</span>
+          <span class="hero-stat-label">Tahun Dokumentasi</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-number" id="stat-activities">—</span>
+          <span class="hero-stat-label">Total Kegiatan</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-number" id="stat-photos">—</span>
+          <span class="hero-stat-label">Foto Tersimpan</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll indicator -->
+    <a href="#recent-docs" class="scroll-indicator" aria-label="Gulir ke bawah" id="scroll-indicator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+      Gulir
+    </a>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       DOKUMENTASI TERBARU
+  ════════════════════════════════════════════ -->
+  <section id="recent-docs" class="section-recent" aria-label="Dokumentasi terbaru">
+    <div class="container">
+
+      <header class="section-header" data-aos="fade-up">
+        <p class="section-eyebrow">Dokumentasi</p>
+        <h2 class="section-title">Kegiatan Terbaru</h2>
+        <p class="section-desc">
+          Kumpulan dokumentasi foto dari berbagai kegiatan bersama warga Segorokuwat.
+        </p>
+      </header>
+
+      <!-- Activity cards grid — populated by app.js -->
+      <div class="activities-grid" id="recent-activities-grid" aria-live="polite">
+        <!-- Skeleton placeholders rendered by JS -->
+      </div>
+
+      <div class="section-cta" data-aos="fade-up">
+        <a href="gallery.html" class="btn-pub-primary" id="cta-all-docs">
+          Lihat Semua Dokumentasi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       TENTANG SEGOROKUWAT (anchor target)
+  ════════════════════════════════════════════ -->
+  <section id="tentang" style="background:#f9f9f9; padding:80px 0;" aria-label="Tentang Segorokuwat">
+    <div class="container" style="max-width:640px; text-align:center;">
+      <div data-aos="fade-up">
+        <p class="section-eyebrow">Mengenal Kami</p>
+        <h2 class="section-title">Tentang Segorokuwat</h2>
+        <p style="color:#666; line-height:1.8; font-size:0.9375rem;">
+          Segorokuwat adalah komunitas warga yang aktif menyelenggarakan berbagai kegiatan
+          sosial dan kemasyarakatan. Website ini hadir sebagai arsip digital resmi untuk
+          mendokumentasikan setiap momen kegiatan agar dapat dinikmati dan dikenang
+          oleh seluruh warga.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="footer-public" id="main-footer" role="contentinfo">
+
+    <div class="container footer-main">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="Segorokuwat">
+            <img src="assets/images/logo.png" alt="Logo Segorokuwat" />
+            <span class="footer-logo-text">Segorokuwat</span>
+          </a>
+          <p class="footer-tagline">
+            Arsip digital dokumentasi kegiatan warga Segorokuwat.
+            Tersimpan rapi, mudah dijelajahi.
+          </p>
+        </div>
+
+        <!-- Quick links -->
+        <nav class="footer-nav-col" aria-label="Navigasi cepat">
+          <h6>Navigasi</h6>
+          <ul class="footer-nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="gallery.html">Dokumentasi</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+          </ul>
+        </nav>
+
+        <!-- Admin -->
+        <nav class="footer-nav-col" aria-label="Tautan admin">
+          <h6>Admin</h6>
+          <ul class="footer-nav-links">
+            <li><a href="admin/login.html">Login Admin</a></li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="container footer-map-section">
+      <div class="footer-map-label" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        Lokasi Segorokuwat
+      </div>
+      <div class="footer-map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63241.99!2d110.4!3d-7.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSegorokuwat!5e0!3m2!1sid!2sid!4v1"
+          title="Peta lokasi Segorokuwat" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          &copy; <span id="footer-year"></span> <span class="accent">Segorokuwat</span>. Hak Cipta Dilindungi.
+        </p>
+        <ul class="footer-bottom-links">
+          <li><a href="admin/login.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCROLL TO TOP
+  ════════════════════════════════════════════ -->
+  <button id="scroll-to-top" class="scroll-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+      stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════════ -->
+
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- Project scripts (order matters) -->
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/gdrive.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- Footer year -->
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+
+</html>
