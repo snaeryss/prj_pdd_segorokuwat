@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Dashboard — Admin Segorokuwat</title>
+  <meta name="description" content="Panel admin Segorokuwat." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/images/logo.png" type="image/png" />
+
+  <!-- Admin stylesheet -->
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+</head>
+
+<body class="adm-body">
+
+  <!-- ═══════════════════════════════════════════
+       TOPBAR
+  ════════════════════════════════════════════ -->
+  <header class="adm-topbar" role="banner">
+
+    <!-- Hamburger (mobile) -->
+    <button class="adm-topbar-toggle" aria-label="Toggle sidebar" title="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+    <!-- Brand -->
+    <a href="../index.html" class="adm-topbar-brand" target="_blank" rel="noopener"
+      title="Lihat halaman publik">
+      <img src="../assets/images/logo.png" alt="Logo Segorokuwat" />
+      Segorokuwat
+    </a>
+
+    <div class="adm-topbar-spacer"></div>
+
+    <!-- User info + logout -->
+    <div class="adm-topbar-user">
+      <span class="adm-user-email" id="adm-user-email" aria-label="Email admin">—</span>
+      <button class="btn-adm-logout btn-logout-trigger" aria-label="Keluar dari panel admin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Keluar
+      </button>
+    </div>
+
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════════════════ -->
+  <nav id="adm-sidebar" class="adm-sidebar" role="navigation" aria-label="Menu admin">
+
+    <div class="adm-nav">
+
+      <span class="adm-nav-label">Menu</span>
+
+      <div class="adm-nav-item active" id="nav-dashboard">
+        <a href="dashboard.html" class="adm-nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Dashboard
+        </a>
+      </div>
+
+      <div class="adm-nav-item" id="nav-years">
+        <a href="years.html" class="adm-nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Tahun
+        </a>
+      </div>
+
+      <div class="adm-nav-item" id="nav-activities">
+        <a href="activities.html" class="adm-nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          Kegiatan
+        </a>
+      </div>
+
+      <div class="adm-nav-item" id="nav-photos">
+        <a href="photos.html" class="adm-nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          Foto
+        </a>
+      </div>
+
+      <hr class="adm-sidebar-divider" />
+
+      <div class="adm-nav-item adm-nav-item--logout">
+        <button class="adm-nav-link btn-logout-trigger" style="width:100%; text-align:left;"
+          aria-label="Keluar dari panel admin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Logout
+        </button>
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div id="adm-overlay" class="adm-sidebar-overlay" aria-hidden="true"></div>
+
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════════════════ -->
+  <main class="adm-content" id="adm-content" role="main" aria-label="Dashboard">
+
+    <!-- Page heading -->
+    <div class="adm-page-header">
+      <h1 class="adm-page-title">Dashboard</h1>
+      <p class="adm-page-sub">Ringkasan data dan aktivitas terbaru Segorokuwat.</p>
+    </div>
+
+
+    <!-- Overview cards -->
+    <div class="adm-cards" role="region" aria-label="Statistik ringkasan">
+
+      <!-- Total Tahun -->
+      <div class="adm-card">
+        <div class="adm-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+        </div>
+        <div class="adm-card-body">
+          <div class="adm-card-num loading" id="stat-years" aria-live="polite">—</div>
+          <div class="adm-card-label">Tahun Terdaftar</div>
+        </div>
+      </div>
+
+      <!-- Total Kegiatan -->
+      <div class="adm-card">
+        <div class="adm-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+          </svg>
+        </div>
+        <div class="adm-card-body">
+          <div class="adm-card-num loading" id="stat-activities" aria-live="polite">—</div>
+          <div class="adm-card-label">Kegiatan Dibuat</div>
+        </div>
+      </div>
+
+      <!-- Total Foto -->
+      <div class="adm-card">
+        <div class="adm-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+        </div>
+        <div class="adm-card-body">
+          <div class="adm-card-num loading" id="stat-photos" aria-live="polite">—</div>
+          <div class="adm-card-label">Foto Terupload</div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Recent activities section -->
+    <div class="adm-section" role="region" aria-label="Kegiatan terbaru">
+
+      <div class="adm-section-header">
+        <h2 class="adm-section-title">Kegiatan Terbaru</h2>
+        <div class="adm-section-actions">
+          <a href="activities.html" class="btn-adm-primary" id="btn-add-activity">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Tambah Kegiatan
+          </a>
+          <a href="photos.html" class="btn-adm-outline" id="btn-add-photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Tambah Foto
+          </a>
+        </div>
+      </div>
+
+      <div class="adm-table-wrap">
+        <table class="adm-table" aria-label="Daftar kegiatan terbaru">
+          <thead>
+            <tr>
+              <th scope="col">Nama Kegiatan</th>
+              <th scope="col">Tahun</th>
+              <th scope="col">Foto</th>
+              <th scope="col">Dibuat</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="recent-tbody" aria-live="polite">
+            <!-- Diisi oleh dashboard.js -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+    <!-- Footer -->
+    <footer style="text-align:center; padding: 1rem 0; font-size: 0.75rem; color: #bbb;">
+      &copy; <span id="footer-year"></span> Segorokuwat — Panel Admin
+    </footer>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS
+  ════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+
+</body>
+
+</html>
