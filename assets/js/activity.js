@@ -1,4 +1,4 @@
-﻿/**
+/**
  * activity.js — Detail Kegiatan & Lightbox
  * Segorokuwat Website — Phase 4
  *
@@ -101,16 +101,16 @@ function renderPageHeader(activity, photoCount) {
   const year = activity.year?.year || '';
   const name = activity.name || 'Kegiatan';
 
-  // Update <title>
-  document.title = `${name}${year ? ' ' + year : ''} — Segorokuwat`;
+  // Update <title> (year sudah ada di eyebrow & breadcrumb, tidak perlu dobel)
+  document.title = `${name} — Segorokuwat`;
 
   // Eyebrow
   const eyebrow = document.getElementById('activity-eyebrow');
   if (eyebrow) eyebrow.textContent = year ? `Dokumentasi ${year}` : 'Dokumentasi Kegiatan';
 
-  // Title
+  // Title — tampilkan name saja, tahun sudah ada di eyebrow + meta + breadcrumb
   const title = document.getElementById('activity-title');
-  if (title) title.textContent = name + (year ? ` ${year}` : '');
+  if (title) title.textContent = name;
 
   // Description (only if non-empty)
   const descEl = document.getElementById('activity-desc');

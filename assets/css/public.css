@@ -1490,6 +1490,7 @@
 
 /* ── Masonry Empty State ── */
 .masonry-empty {
+    column-span: all;   /* span all CSS Columns — fixes empty state confined to 1 column */
     display: flex;
     flex-direction: column;
     align-items: center;
