@@ -250,7 +250,7 @@ async function getPhotos({ activityId = null, subcategoryId = null, visibleOnly 
     .from('photos')
     .select(`
       *,
-      activity:activities(id, name, slug),
+      activity:activities!photos_activity_id_fkey(id, name, slug),
       subcategory:subcategories(id, name, slug)
     `, { count: 'exact' })
     .order('created_at', { ascending: false })
@@ -277,7 +277,7 @@ async function getPhotoById(id) {
     .from('photos')
     .select(`
       *,
-      activity:activities(id, name, slug, year_id),
+      activity:activities!photos_activity_id_fkey(id, name, slug, year_id),
       subcategory:subcategories(id, name, slug)
     `)
     .eq('id', id)
@@ -332,7 +332,7 @@ async function getFeaturedPhotos(limit = 6) {
     .from('photos')
     .select(`
       *,
-      activity:activities(id, name, slug, year_id, year:years(year))
+      activity:activities!photos_activity_id_fkey(id, name, slug, year_id, year:years(year))
     `)
     .eq('is_featured', true)
     .eq('is_visible', true)
@@ -367,7 +367,7 @@ async function getRecentActivities(limit = 5) {
     .select(`
       *,
       year:years(year),
-      photos(count)
+      photos!photos_activity_id_fkey(count)
     `)
     .order('created_at', { ascending: false })
     .limit(limit);
