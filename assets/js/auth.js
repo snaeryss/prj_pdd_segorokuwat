@@ -15,13 +15,13 @@ const Auth = {
     try {
       const session = await DB.getSession();
       if (!session) {
-        window.location.href = '/admin/login.html';
+        window.location.href = 'login.html';
         return false;
       }
       return true;
     } catch (error) {
       console.error('Auth guard error:', error);
-      window.location.href = '/admin/login.html';
+      window.location.href = 'login.html';
       return false;
     }
   },
@@ -62,7 +62,7 @@ const Auth = {
     } catch (error) {
       console.error('Logout error:', error);
     }
-    window.location.href = '/admin/login.html';
+    window.location.href = 'login.html';
   },
 
   /**
@@ -85,7 +85,7 @@ const Auth = {
     try {
       const session = await DB.getSession();
       if (session) {
-        window.location.href = '/admin/dashboard.html';
+        window.location.href = 'dashboard.html';
         return true;
       }
     } catch {
@@ -105,7 +105,7 @@ const Auth = {
       if (event === 'SIGNED_OUT') {
         // If on an admin page (not login), redirect
         if (!window.location.pathname.includes('login')) {
-          window.location.href = '/admin/login.html';
+          window.location.href = 'login.html';
         }
       }
     });

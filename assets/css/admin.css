@@ -1,0 +1,271 @@
+﻿/**
+ * admin.css — Halaman Admin Segorokuwat
+ *
+ * Style khusus halaman admin (terpisah dari public.css).
+ * Phase 5: Login page.
+ * Phase 6+: Dashboard, sidebar, topbar, data tables.
+ */
+
+/* ── Design Tokens (admin) ─────────────────────────────────── */
+:root {
+  --adm-black:       #0a0a0a;
+  --adm-white:       #ffffff;
+  --adm-gray:        #888888;
+  --adm-gray-light:  #cccccc;
+  --adm-border:      #e8e8e8;
+  --adm-accent:      #f2d92d;
+  --adm-accent-dark: #d4bd14;
+  --adm-error:       #dc2626;
+  --adm-error-bg:    rgba(220, 38, 38, 0.07);
+
+  --font-primary: 'Rubik', 'Roboto', sans-serif;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-full: 999px;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.10), 0 1px 6px rgba(0,0,0,0.06);
+  --trans-fast:  150ms ease;
+  --trans-base:  250ms ease;
+}
+
+/* ── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--adm-black);
+  background: var(--adm-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--font-primary); cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: var(--font-primary); }
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+
+.login-body {
+  background: var(--adm-black);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* ── Card ── */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--adm-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2.5rem 2.25rem 2rem;
+  position: relative;
+}
+
+/* ── Logo ── */
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+}
+
+.login-logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.login-logo-text {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--adm-black);
+  letter-spacing: -0.01em;
+}
+
+/* ── Headings ── */
+.login-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--adm-black);
+  margin-bottom: 0.3rem;
+  line-height: 1.2;
+}
+
+.login-subtitle {
+  font-size: 0.875rem;
+  color: var(--adm-gray);
+  margin-bottom: 1.75rem;
+  line-height: 1.5;
+}
+
+/* ── Error block ── */
+.login-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: var(--adm-error-bg);
+  border: 1px solid rgba(220,38,38,0.18);
+  border-left: 3px solid var(--adm-error);
+  border-radius: var(--radius-md);
+  padding: 0.7rem 0.875rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--adm-error);
+  line-height: 1.5;
+  transition: opacity var(--trans-base);
+}
+
+.login-error[hidden] { display: none; }
+
+.login-error svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Form group ── */
+.login-form-group { margin-bottom: 1.25rem; }
+
+.login-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--adm-black);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.01em;
+}
+
+/* ── Input ── */
+.login-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9rem;
+  color: var(--adm-black);
+  background: var(--adm-white);
+  border: 1.5px solid var(--adm-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+  outline: none;
+  line-height: 1.5;
+}
+
+.login-input::placeholder { color: var(--adm-gray-light); }
+
+.login-input:focus {
+  border-color: var(--adm-accent);
+  box-shadow: 0 0 0 3px rgba(242,217,45,0.18);
+}
+
+.login-input.is-invalid {
+  border-color: var(--adm-error);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.10);
+}
+
+/* ── Password wrapper + eye toggle ── */
+.login-input-wrap { position: relative; }
+.login-input-wrap .login-input { padding-right: 2.75rem; }
+
+.eye-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--adm-gray);
+  cursor: pointer;
+  transition: color var(--trans-fast);
+}
+
+.eye-toggle:hover { color: var(--adm-black); }
+.eye-toggle svg { width: 16px; height: 16px; pointer-events: none; }
+
+/* ── Submit button ── */
+.btn-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--adm-black);
+  background: var(--adm-accent);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--trans-fast), transform var(--trans-fast), opacity var(--trans-fast);
+  margin-top: 0.25rem;
+  letter-spacing: 0.01em;
+}
+
+.btn-login:hover:not(:disabled) { background: var(--adm-accent-dark); }
+.btn-login:active:not(:disabled) { transform: scale(0.99); }
+.btn-login:disabled { opacity: 0.65; cursor: not-allowed; }
+.btn-login svg { width: 16px; height: 16px; }
+
+/* Spinner inside button */
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: var(--adm-black);
+  border-radius: 50%;
+  animation: btnSpin 0.65s linear infinite;
+  display: none;
+}
+
+.btn-login.loading .btn-spinner { display: block; }
+.btn-login.loading .btn-label  { display: none; }
+
+@keyframes btnSpin { to { transform: rotate(360deg); } }
+
+/* ── Back link ── */
+.login-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--adm-gray);
+  text-decoration: none;
+  transition: color var(--trans-fast);
+}
+
+.login-back:hover { color: var(--adm-black); }
+.login-back svg { width: 13px; height: 13px; }
+
+/* ── Divider ── */
+.login-divider {
+  border: none;
+  border-top: 1px solid var(--adm-border);
+  margin: 1.5rem 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .login-body {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem 1.75rem;
+  }
+}
