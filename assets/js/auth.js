@@ -5,7 +5,101 @@
  * and route protection for admin pages.
  */
 
+/**
+ * Auth Guard — Segorokuwat
+ * 
+ * Handles admin authentication, session management,
+ * and route protection for admin pages.
+ *
+ * Idle Timeout: 30 menit tanpa interaksi → otomatis logout.
+ */
+
+const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 menit
+const IDLE_WARNING_MS = 2 * 60 * 1000;  // warning 2 menit sebelum logout
+const IDLE_STORAGE_KEY = 'sgw_last_active';
+
 const Auth = {
+  _idleTimer: null,
+  _warningTimer: null,
+  _warningToast: null,
+
+  /**
+   * Perbarui timestamp aktivitas terakhir.
+   * Dipanggil setiap ada interaksi user.
+   */
+  _resetIdle() {
+    localStorage.setItem(IDLE_STORAGE_KEY, Date.now().toString());
+    clearTimeout(this._idleTimer);
+    clearTimeout(this._warningTimer);
+    if (this._warningToast) {
+      this._warningToast.remove();
+      this._warningToast = null;
+    }
+
+    // Warning 2 menit sebelum logout
+    this._warningTimer = setTimeout(() => {
+      this._showIdleWarning();
+    }, IDLE_TIMEOUT_MS - IDLE_WARNING_MS);
+
+    // Logout setelah 30 menit idle
+    this._idleTimer = setTimeout(() => {
+      this._forceLogout();
+    }, IDLE_TIMEOUT_MS);
+  },
+
+  _showIdleWarning() {
+    // Hapus warning lama kalau ada
+    if (this._warningToast) this._warningToast.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'idle-warning-toast';
+    toast.style.cssText = `
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: #854d0e; color: #fff; padding: 0.85rem 1.4rem;
+      border-radius: 8px; font-size: 0.875rem; z-index: 9999;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      display: flex; align-items: center; gap: 0.75rem;
+      animation: fadeIn 0.2s ease;
+    `;
+    toast.innerHTML = `
+      <span>⚠️ Sesi akan berakhir dalam <strong>2 menit</strong> karena tidak ada aktivitas.</span>
+      <button onclick="Auth._resetIdle()" style="
+        background: rgba(255,255,255,0.2); border: none; color: #fff;
+        padding: 0.3rem 0.75rem; border-radius: 4px; cursor: pointer;
+        font-size: 0.8125rem; font-weight: 600;
+      ">Tetap Login</button>
+    `;
+    document.body.appendChild(toast);
+    this._warningToast = toast;
+  },
+
+  async _forceLogout() {
+    if (this._warningToast) this._warningToast.remove();
+    localStorage.removeItem(IDLE_STORAGE_KEY);
+    try { await DB.signOut(); } catch { /* ignore */ }
+    // Redirect ke login dengan pesan
+    window.location.href = 'login.html?reason=idle';
+  },
+
+  /**
+   * Pasang event listener untuk deteksi aktivitas user.
+   * Dipanggil sekali saat halaman admin dimuat.
+   */
+  initIdleWatcher() {
+    const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'];
+    const reset = () => this._resetIdle();
+    events.forEach(ev => window.addEventListener(ev, reset, { passive: true }));
+
+    // Cek antar tab: kalau tab lain sudah idle logout, ikut logout
+    window.addEventListener('storage', (e) => {
+      if (e.key === IDLE_STORAGE_KEY && e.newValue === null) {
+        window.location.href = 'login.html?reason=idle';
+      }
+    });
+
+    // Mulai timer pertama
+    this._resetIdle();
+  },
   /**
    * Check if user is authenticated.
    * Redirects to login page if not.

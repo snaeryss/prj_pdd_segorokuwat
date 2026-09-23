@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -39,23 +39,18 @@
 
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       NAVBAR
-  ════════════════════════════════════════════ -->
+  <!-- NAVBAR -->
   <nav id="main-navbar" class="navbar-public" role="navigation" aria-label="Navigasi utama">
     <div class="nav-inner">
-
       <a href="index.html" class="nav-logo" aria-label="Segorokuwat — Halaman Utama">
         <img src="assets/images/logo.png" alt="Logo Segorokuwat" />
         <span class="nav-logo-text">Segorokuwat</span>
       </a>
-
       <ul class="nav-links" role="list">
         <li><a href="index.html" class="nav-link-pub" id="nav-home">Beranda</a></li>
         <li><a href="gallery.html" class="nav-link-pub" id="nav-gallery">Dokumentasi</a></li>
         <li><a href="index.html#tentang" class="nav-link-pub" id="nav-about">Tentang</a></li>
       </ul>
-
       <div style="display:flex; align-items:center; gap:0.75rem; flex-shrink:0;">
         <a href="admin/login.html" class="nav-admin-link" id="nav-admin" aria-label="Masuk sebagai admin">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -69,7 +64,6 @@
           <span></span><span></span><span></span>
         </button>
       </div>
-
     </div>
   </nav>
 
@@ -92,62 +86,38 @@
     </div>
   </div>
 
-
-  <!-- ═══════════════════════════════════════════
-       PAGE HEADER (abu-abu terang)
-  ════════════════════════════════════════════ -->
+  <!-- PAGE HEADER -->
   <header class="gallery-page-header" role="banner">
     <div class="gallery-page-header-inner">
-
       <p class="gallery-page-eyebrow" aria-hidden="true">Arsip Digital</p>
       <h1 class="gallery-page-title">Dokumentasi Kegiatan</h1>
-      <p class="gallery-page-desc">
-        Pilih tahun untuk menjelajahi kegiatan yang terdokumentasi.
-      </p>
-
-      <!-- Breadcrumb -->
+      <p class="gallery-page-desc">Pilih tahun untuk menjelajahi kegiatan yang terdokumentasi.</p>
       <nav class="gallery-breadcrumb" aria-label="Lokasi halaman">
         <ol class="breadcrumb-list" id="gallery-breadcrumb-list">
-          <!-- Diupdate oleh gallery.js -->
           <li><a href="index.html">Beranda</a></li>
           <li><span class="breadcrumb-sep" aria-hidden="true">—</span></li>
           <li><span aria-current="page">Dokumentasi</span></li>
         </ol>
       </nav>
-
     </div>
   </header>
 
-
-  <!-- ═══════════════════════════════════════════
-       GALLERY MAIN — Filter + Grid
-  ════════════════════════════════════════════ -->
+  <!-- GALLERY MAIN -->
   <main class="gallery-main" id="gallery-main" aria-label="Daftar dokumentasi kegiatan">
     <div class="gallery-main-inner">
-
-      <!-- Year Filter -->
       <div class="year-filter-wrap" id="year-filter-wrap">
         <span class="year-filter-label" aria-label="Filter berdasarkan tahun">Tahun</span>
         <div class="year-filter" id="year-filter" role="group" aria-label="Filter tahun">
-          <!-- Pills dirender oleh gallery.js -->
           <button class="year-pill active" data-year-id="" data-year-num="">Semua</button>
         </div>
       </div>
-
-      <!-- Summary text -->
       <p class="gallery-summary" id="gallery-summary" aria-live="polite"></p>
-
-      <!-- Activity cards grid -->
-      <div class="activities-grid" id="gallery-grid" aria-live="polite">
-        <!-- Dirender oleh gallery.js -->
-      </div>
-
-      <!-- Load More -->
+      <div class="activities-grid" id="gallery-grid" aria-live="polite"></div>
       <div class="gallery-load-more" id="load-more-section">
         <button class="btn-load-more" id="btn-load-more" aria-label="Muat lebih banyak kegiatan">
           Muat lebih banyak
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
             <line x1="12" y1="5" x2="12" y2="19" />
             <polyline points="19 12 12 19 5 12" />
           </svg>
@@ -156,30 +126,22 @@
           Semua kegiatan sudah ditampilkan
         </span>
       </div>
-
     </div>
   </main>
 
-
-  <!-- ═══════════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════════════ -->
+  <!-- FOOTER -->
   <footer class="footer-public" id="main-footer" role="contentinfo">
-
     <div class="container footer-main">
       <div class="footer-grid">
-
         <div class="footer-brand">
           <a href="index.html" class="footer-logo" aria-label="Segorokuwat">
-            <img src="assets/images/logo.png" alt="Logo Segorokuwat" />
+            <!-- <img src="assets/images/logo.png" alt="Logo Segorokuwat" /> -->
             <span class="footer-logo-text">Segorokuwat</span>
           </a>
           <p class="footer-tagline">
             Arsip digital dokumentasi kegiatan warga Segorokuwat.
-            Tersimpan rapi, mudah dijelajahi.
           </p>
         </div>
-
         <nav class="footer-nav-col" aria-label="Navigasi cepat">
           <h6>Navigasi</h6>
           <ul class="footer-nav-links">
@@ -188,17 +150,14 @@
             <li><a href="index.html#tentang">Tentang</a></li>
           </ul>
         </nav>
-
         <nav class="footer-nav-col" aria-label="Tautan admin">
           <h6>Admin</h6>
           <ul class="footer-nav-links">
             <li><a href="admin/login.html">Login Admin</a></li>
           </ul>
         </nav>
-
       </div>
     </div>
-
     <div class="container footer-map-section">
       <div class="footer-map-label" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -210,29 +169,32 @@
       </div>
       <div class="footer-map-wrapper">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63241.99!2d110.4!3d-7.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSegorokuwat!5e0!3m2!1sid!2sid!4v1"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d996.8!2d110.35788!3d-7.76472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDUnNTMuMCJTIDExMMKwMjEnMzAuMiJF!5e0!3m2!1sid!2sid!4v1"
           title="Peta lokasi Segorokuwat" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           allowfullscreen></iframe>
+        <a href="https://www.google.com/maps?q=-7.764722,110.358389" target="_blank" rel="noopener noreferrer"
+          class="footer-map-open-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+          Buka di Google Maps
+        </a>
       </div>
     </div>
-
     <div class="container">
       <div class="footer-bottom">
         <p class="footer-copyright">
-          &copy; <span id="footer-year"></span> <span class="accent">Segorokuwat</span>. Hak Cipta Dilindungi.
+          <strong>Copyright</strong> &copy; 2026 by <span class="accent">Segorokuwat</span><br>
+          All Rights Reserved &bull; Official Media Documentation
         </p>
-        <ul class="footer-bottom-links">
-          <li><a href="admin/login.html">Admin</a></li>
-        </ul>
       </div>
     </div>
-
   </footer>
 
-
-  <!-- ═══════════════════════════════════════════
-       SCROLL TO TOP
-  ════════════════════════════════════════════ -->
+  <!-- SCROLL TO TOP -->
   <button id="scroll-to-top" class="scroll-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
       stroke-linejoin="round" aria-hidden="true">
@@ -240,10 +202,7 @@
     </svg>
   </button>
 
-
-  <!-- ═══════════════════════════════════════════
-       SCRIPTS
-  ════════════════════════════════════════════ -->
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="assets/js/supabase.js"></script>

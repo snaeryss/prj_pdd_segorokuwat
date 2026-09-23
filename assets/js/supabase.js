@@ -342,6 +342,20 @@ async function getFeaturedPhotos(limit = 6) {
   return data;
 }
 
+// Foto unggulan untuk satu kegiatan tertentu (untuk rotating cover)
+async function getFeaturedPhotosByActivity(activityId) {
+  const client = initSupabase();
+  const { data, error } = await client
+    .from('photos')
+    .select('id, image_url, title')
+    .eq('activity_id', activityId)
+    .eq('is_featured', true)
+    .eq('is_visible', true)
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
 // ── Statistics (for admin dashboard) ──
 
 async function getStats() {
@@ -420,6 +434,7 @@ window.DB = {
   updatePhoto,
   deletePhoto,
   getFeaturedPhotos,
+  getFeaturedPhotosByActivity,
   // Stats
   getStats,
   getRecentActivities,

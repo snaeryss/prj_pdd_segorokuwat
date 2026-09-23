@@ -189,6 +189,12 @@
     pwInput.addEventListener('input',   () => { hideError(); clearInvalid(pwInput); });
 
     // ── Redirect jika sudah login ─────────────────────────────────
+    // Tampilkan pesan jika redirect karena idle timeout
+    const _params = new URLSearchParams(window.location.search);
+    if (_params.get('reason') === 'idle') {
+      showError('Sesi berakhir karena tidak ada aktivitas selama 30 menit. Silakan login kembali.');
+    }
+
     (async () => {
       try {
         await Auth.redirectIfAuthenticated();

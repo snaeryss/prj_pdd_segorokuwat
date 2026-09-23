@@ -155,6 +155,58 @@ const GDrive = {
       this.handleImageError(img);
     });
   },
+
+  /**
+   * Get a cover image URL for an activity, rotating per session.
+   *
+   * Priority:
+   * 1. activity.cover_photo.image_url  — cover yang di-set manual di DB
+   * 2. Foto unggulan (is_featured=true) untuk kegiatan ini — dipilih acak
+   *    satu kali per sesi (disimpan di sessionStorage agar konsisten selama
+   *    user browsing, tapi berganti di sesi/tab baru)
+   * 3. null — caller harus tampilkan placeholder
+   *
+   * Cara pakai:
+   *   const coverUrl = await GDrive.getSessionCover(activity);
+   *
+   * @param {object} activity - Object kegiatan dari DB.getActivities()
+   * @returns {Promise<string|null>} Image URL atau null
+   */
+  async getSessionCover(activity) {
+    // 1. Cover manual sudah ada di DB
+    if (activity.cover_photo?.image_url) {
+      return this.getImageUrl(activity.cover_photo.image_url, 'm');
+    }
+
+    const activityId = activity.id;
+    const storageKey = `sgw_cover_${activityId}`;
+
+    // 2a. Cek sessionStorage — sudah dipilih di sesi ini?
+    try {
+      const cached = sessionStorage.getItem(storageKey);
+      if (cached) return this.getImageUrl(cached, 'm');
+    } catch { /* sessionStorage tidak tersedia, lanjut */ }
+
+    // 2b. Fetch foto unggulan kegiatan ini dari DB
+    try {
+      const featured = await DB.getFeaturedPhotosByActivity(activityId);
+      if (featured && featured.length > 0) {
+        // Pilih acak satu foto
+        const picked = featured[Math.floor(Math.random() * featured.length)];
+        const url = picked.image_url;
+
+        // Simpan ke sessionStorage supaya konsisten selama sesi
+        try { sessionStorage.setItem(storageKey, url); } catch { /* ignore */ }
+
+        return this.getImageUrl(url, 'm');
+      }
+    } catch (err) {
+      console.warn('[GDrive] getSessionCover fetch error:', err.message);
+    }
+
+    // 3. Tidak ada cover sama sekali
+    return null;
+  },
 };
 
 // Expose globally

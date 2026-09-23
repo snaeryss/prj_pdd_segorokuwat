@@ -188,8 +188,8 @@ function renderSubcatFilter(subcats) {
       // Filter photos
       actState.activeSubcatId = subcatId;
       if (subcatId) {
-        actState.activePhotos = actState.allPhotos.filter(
-          p => p.subcategory_id === subcatId
+        actState.activePhotos = shuffleArray(
+          actState.allPhotos.filter(p => p.subcategory_id === subcatId)
         );
       } else {
         actState.activePhotos = [...actState.allPhotos];
@@ -225,6 +225,16 @@ function buildMasonryEmpty(subcatName = null) {
       <h5>Belum ada foto tersedia</h5>
       <p>${msg}</p>
     </div>`;
+}
+
+// ── Shuffle (Fisher-Yates) ───────────────────────────────────
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 // ── Masonry Grid ─────────────────────────────────────────────
@@ -471,7 +481,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       limit: 200,
     });
 
-    actState.allPhotos    = photos || [];
+    actState.allPhotos    = shuffleArray(photos || []);
     actState.activePhotos = [...actState.allPhotos];
     lb.photos             = actState.activePhotos;
 

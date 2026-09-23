@@ -1,4 +1,4 @@
-﻿/**
+/**
  * app.js — Landing Page Logic
  * Segorokuwat Website
  *
@@ -83,18 +83,19 @@ function buildSkeletons(count = 6) {
 }
 
 // ── Activity Card ───────────────────────────────────────────
-function buildActivityCard(activity, delay = 0) {
-  const coverUrl   = activity.cover_photo?.image_url
-    ? GDrive.getImageUrl(activity.cover_photo.image_url, 'm')
-    : null;
+// Menerima coverUrl yang sudah diresolved (termasuk rotating cover)
+function buildActivityCardHtml(activity, coverUrl, delay = 0) {
   const year       = activity.year?.year || '';
   const name       = activity.name || 'Kegiatan';
   const slug       = activity.slug || activity.id;
   const photoCount = Array.isArray(activity.photos) ? (activity.photos[0]?.count ?? 0) : 0;
 
   const thumbContent = coverUrl
-    ? `<img src="${coverUrl}" alt="${name}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=activity-card-thumb-placeholder>${Icons.image.replace(/`/g,'').replace(/"/g,"'")}<span>Foto tidak tersedia</span></div>';" />`
-    : `<div class="activity-card-thumb-placeholder">${Icons.image}<span style="font-size:0.75rem;font-weight:500;">Belum ada foto</span></div>`;
+    ? `<img src="${coverUrl}" alt="${name}" loading="lazy"
+           onerror="this.onerror=null; this.src='${GDrive.FALLBACK_IMAGE}'" />`
+    : `<div class="activity-card-thumb-placeholder">${Icons.image}
+         <span style="font-size:0.75rem;font-weight:500;">Belum ada foto</span>
+       </div>`;
 
   const meta = [];
   if (year) meta.push(`<span class="activity-card-meta-item">${Icons.calendar} ${year}</span>`);
@@ -143,9 +144,19 @@ async function loadRecentActivities() {
   try {
     const all        = await DB.getActivities();
     const activities = all.slice(0, RECENT_LIMIT);
-    grid.innerHTML   = activities.length
-      ? activities.map((a, i) => buildActivityCard(a, i * 80)).join('')
-      : buildEmptyState();
+
+    if (!activities.length) {
+      grid.innerHTML = buildEmptyState();
+    } else {
+      // Resolve cover per kegiatan secara paralel (rotating session cover)
+      const covers = await Promise.all(
+        activities.map(a => GDrive.getSessionCover(a).catch(() => null))
+      );
+      grid.innerHTML = activities
+        .map((a, i) => buildActivityCardHtml(a, covers[i], i * 80))
+        .join('');
+    }
+
     if (window.AOS) AOS.refresh();
   } catch (err) {
     console.warn('[Segorokuwat] DB fetch skipped:', err.message);

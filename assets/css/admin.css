@@ -393,16 +393,79 @@ input, textarea, select { font-family: var(--font-primary); }
   display: flex;
   flex-direction: column;
   z-index: 900;
-  transition: transform 0.25s ease;
+  transition: width 0.25s ease, transform 0.25s ease;
 }
 
-.adm-sidebar::-webkit-scrollbar {
-  width: 4px;
+/* Desktop collapsed — icon only */
+.adm-sidebar.collapsed {
+  width: 56px;
 }
 
-.adm-sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+.adm-sidebar.collapsed .adm-nav-label,
+.adm-sidebar.collapsed .adm-nav-link span,
+.adm-sidebar.collapsed .adm-sidebar-divider {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.adm-sidebar.collapsed .adm-nav-link {
+  padding: 0.65rem 0;
+  justify-content: center;
+  gap: 0;
+  border-left: 3px solid transparent;
+}
+
+.adm-sidebar.collapsed .adm-nav-item.active > .adm-nav-link {
+  border-left-color: var(--adm-accent);
+}
+
+.adm-sidebar.collapsed .adm-nav-link svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.adm-sidebar.collapsed .adm-nav-item:hover > .adm-nav-link svg {
+  opacity: 1;
+}
+
+/* Tooltip saat collapsed */
+.adm-sidebar.collapsed .adm-nav-item {
+  position: relative;
+}
+
+.adm-sidebar.collapsed .adm-nav-item:hover::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--adm-black);
+  color: var(--adm-white);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Content menyesuaikan lebar sidebar */
+.adm-content {
+  margin-left: 220px;
+  margin-top: 56px;
+  min-height: calc(100vh - 56px);
+  padding: 2rem;
+  background: #f5f5f5;
+  transition: margin-left 0.25s ease;
+}
+
+.adm-sidebar.collapsed ~ .adm-content,
+body.sidebar-collapsed .adm-content {
+  margin-left: 56px;
 }
 
 .adm-nav {
@@ -483,15 +546,6 @@ input, textarea, select { font-family: var(--font-primary); }
 .adm-nav-item--logout:hover > .adm-nav-link {
   color: #f87171;
   background: rgba(248, 113, 113, 0.08);
-}
-
-/* ── Content area ── */
-.adm-content {
-  margin-left: 220px;
-  margin-top: 56px;
-  min-height: calc(100vh - 56px);
-  padding: 2rem;
-  background: #f5f5f5;
 }
 
 /* ── Page heading ── */
@@ -785,3 +839,140 @@ input, textarea, select { font-family: var(--font-primary); }
   .adm-section { padding: 1rem; }
   .adm-card { padding: 1rem; }
 }
+
+/* ============================================
+   COMPATIBILITY LAYER — untuk components.js (UI.*)
+   ============================================
+   components.js (UI.confirm, UI.showLoading, UI.setButtonLoading,
+   UI.skeleton) dibuat untuk halaman publik yang memuat style.css.
+   Halaman admin TIDAK memuat style.css, jadi variable dan keyframes
+   berikut perlu di-mirror di sini supaya UI.* berfungsi benar
+   di halaman admin manapun (login, dashboard, years, activities, photos).
+*/
+
+:root {
+  --primary: #7366ff;
+  --danger:  #fc4438;
+  --warning: #ffaa05;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e9ecef 25%, #f1f3f5 50%, #e9ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e9ecef;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner-sm {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--adm-gray);
+}
+
+.empty-state svg { opacity: 0.3; margin-bottom: 1rem; }
+.empty-state h5 { color: var(--adm-black); margin-bottom: 0.4rem; font-size: 1rem; }
+.empty-state p { max-width: 400px; font-size: 0.8125rem; }
+
+
+/* ============================================
+   MODAL — Tambah / Edit (Tahun, Kegiatan, dll.)
+   ============================================ */
+
+.year-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.year-modal-overlay[hidden] { display: none; }
+
+.year-modal {
+  background: var(--adm-white);
+  border-radius: var(--radius-lg);
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow-card);
+  padding: 1.75rem 1.75rem 1.5rem;
+  animation: slideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.year-modal-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--adm-black);
+  margin: 0 0 1.25rem;
+}
+
+.year-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.year-modal-actions .btn-adm-primary .btn-spinner {
+  display: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: var(--adm-black);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+.year-modal-actions .btn-adm-primary.loading .btn-spinner { display: inline-block; }
+.year-modal-actions .btn-adm-primary.loading .btn-label { display: none; }
+
+.btn-delete-subcat svg,
+.btn-edit-subcat svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+
+

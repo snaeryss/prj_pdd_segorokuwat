@@ -184,10 +184,8 @@ function buildSkeletons(count = 6) {
 }
 
 // ── Activity Card Builder ────────────────────────────────────
-function buildActivityCard(activity, delay = 0) {
-  const coverUrl   = activity.cover_photo?.image_url
-    ? GDrive.getImageUrl(activity.cover_photo.image_url, 'm')
-    : null;
+// Menerima coverUrl yang sudah diresolved (termasuk rotating session cover)
+function buildActivityCardHtml(activity, coverUrl, delay = 0) {
   const year       = activity.year?.year || '';
   const name       = activity.name || 'Kegiatan';
   const slug       = activity.slug || activity.id;
@@ -195,7 +193,7 @@ function buildActivityCard(activity, delay = 0) {
 
   const thumbContent = coverUrl
     ? `<img src="${coverUrl}" alt="${name}" loading="lazy"
-           onerror="this.onerror=null; GDrive.handleImageError(this)" />`
+           onerror="this.onerror=null; this.src='${GDrive.FALLBACK_IMAGE}'" />`
     : `<div class="activity-card-thumb-placeholder">${Icons.image}
          <span style="font-size:0.75rem;font-weight:500;">Belum ada foto</span>
        </div>`;
@@ -252,8 +250,11 @@ async function fetchActivities(append = false) {
     }
 
     if (page.length > 0 && grid) {
-      const startDelay = append ? 0 : 0;
-      const html = page.map((a, i) => buildActivityCard(a, startDelay + i * 60)).join('');
+      // Resolve rotating session cover secara paralel
+      const covers = await Promise.all(
+        page.map(a => GDrive.getSessionCover(a).catch(() => null))
+      );
+      const html = page.map((a, i) => buildActivityCardHtml(a, covers[i], i * 60)).join('');
 
       if (append) {
         grid.insertAdjacentHTML('beforeend', html);

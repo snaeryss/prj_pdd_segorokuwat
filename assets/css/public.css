@@ -266,6 +266,30 @@
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.nav-mobile-admin .nav-admin-link {
+    display: inline-flex;
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.nav-mobile-admin .nav-admin-link svg {
+    width: 15px;
+    height: 15px;
+    opacity: 0.8;
+}
+
+.nav-mobile-admin .nav-admin-link:hover {
+    color: var(--pub-white);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
 
 /* ============================================
    HERO SECTION
@@ -883,19 +907,109 @@
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     padding: 1.25rem 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
     gap: 1rem;
     flex-wrap: wrap;
 }
 
 .footer-copyright {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.28);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: left;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+}
+
+.footer-copyright strong {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
 }
 
 .footer-copyright .accent {
     color: var(--pub-accent);
+    font-weight: 700;
+}
+
+.footer-copyright .separator {
+    color: rgba(255, 255, 255, 0.25);
+    margin: 0 0.4rem;
+}
+
+/* ── Footer Responsive ── */
+
+/* Desktop besar: padding nyaman */
+.footer-public .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Tablet landscape (~1024px) */
+@media (max-width: 1024px) {
+    .footer-public .container {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Tablet portrait (~768px) */
+@media (max-width: 768px) {
+    .footer-public .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .footer-main {
+        padding: 2.5rem 0 1.5rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+
+    .footer-tagline {
+        max-width: 100%;
+    }
+
+    .footer-map-section {
+        padding-bottom: 1.5rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* Mobile kecil (~480px) */
+@media (max-width: 480px) {
+    .footer-public .container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    .footer-map-wrapper {
+        height: 180px;
+        border-radius: var(--radius-md);
+    }
 }
 
 .footer-bottom-links {
