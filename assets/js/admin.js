@@ -16,14 +16,19 @@ const AIcon = {
   x: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
 };
 
-// ── Shared: Sidebar toggle (mobile) ─────────────────────────
+// ── Shared: Sidebar toggle ──────────────────────────────────
 function initSidebar() {
-  const sidebar = document.getElementById('adm-sidebar');
-  const overlay = document.getElementById('adm-overlay');
-  const content = document.getElementById('adm-content');
+  const sidebar   = document.getElementById('adm-sidebar');
+  const overlay   = document.getElementById('adm-overlay');
+  const content   = document.getElementById('adm-content');
   const toggleBtns = document.querySelectorAll('.adm-topbar-toggle');
+  const COLLAPSED_KEY = 'sgw_sidebar_collapsed';
 
-  // ── Mobile: slide in/out ──────────────────────────────────
+  function applyCollapsed(collapsed) {
+    sidebar?.classList.toggle('collapsed', collapsed);
+    content?.classList.toggle('sidebar-collapsed', collapsed);
+  }
+
   function openSidebar() {
     sidebar?.classList.add('open');
     overlay?.classList.add('active');
@@ -35,39 +40,13 @@ function initSidebar() {
     document.body.style.overflow = '';
   }
 
-  // ── Desktop: collapse/expand ──────────────────────────────
-  const COLLAPSED_KEY = 'sgw_sidebar_collapsed';
-
-  function applyCollapsed(collapsed) {
-    if (collapsed) {
-      sidebar?.classList.add('collapsed');
-      content?.classList.add('sidebar-collapsed');
-    } else {
-      sidebar?.classList.remove('collapsed');
-      content?.classList.remove('sidebar-collapsed');
-    }
-  }
-
-  function toggleDesktopSidebar() {
-    const isCollapsed = sidebar?.classList.contains('collapsed');
-    const next = !isCollapsed;
-    applyCollapsed(next);
-    try { localStorage.setItem(COLLAPSED_KEY, next ? '1' : '0'); } catch { /* ignore */ }
-  }
-
-  // Restore state dari localStorage
-  try {
-    const saved = localStorage.getItem(COLLAPSED_KEY);
-    if (saved === '1') applyCollapsed(true);
-  } catch { /* ignore */ }
-
-  // ── Toggle button ─────────────────────────────────────────
   toggleBtns.forEach(btn => btn.addEventListener('click', () => {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
+    if (window.innerWidth <= 768) {
       sidebar?.classList.contains('open') ? closeSidebar() : openSidebar();
     } else {
-      toggleDesktopSidebar();
+      const next = !sidebar?.classList.contains('collapsed');
+      applyCollapsed(next);
+      try { localStorage.setItem(COLLAPSED_KEY, next ? '1' : '0'); } catch { /* ignore */ }
     }
   }));
 
@@ -75,6 +54,11 @@ function initSidebar() {
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) closeSidebar();
   });
+
+  // Restore state
+  try {
+    if (localStorage.getItem(COLLAPSED_KEY) === '1') applyCollapsed(true);
+  } catch { /* ignore */ }
 }
 
 // ── Shared: Logout ───────────────────────────────────────────

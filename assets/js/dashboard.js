@@ -1,9 +1,6 @@
-﻿/**
+/**
  * dashboard.js — Admin Dashboard
  * Segorokuwat — Phase 6
- *
- * Handles: auth guard, overview stats, recent activities table,
- * sidebar toggle (mobile), logout.
  */
 
 // ── Icons (inline SVG) ──────────────────────────────────────
@@ -36,7 +33,7 @@ function setCardNum(id, value) {
 function buildTableRows(activities) {
   if (!activities || activities.length === 0) {
     return `<tr>
-      <td colspan="4">
+      <td colspan="5">
         <div class="adm-table-empty">
           ${DIcon.inbox}
           <p>Belum ada kegiatan yang terdaftar.</p>
@@ -53,19 +50,15 @@ function buildTableRows(activities) {
     const count = Array.isArray(a.photos) ? a.photos[0]?.count ?? '—' : '—';
 
     return `<tr>
-      <td>
-        <span class="adm-link">${name}</span>
-      </td>
+      <td><span class="adm-link">${name}</span></td>
       <td><span class="adm-badge">${year}</span></td>
       <td>${count} foto</td>
       <td>${date}</td>
       <td>
         <a href="../activity.html?slug=${encodeURIComponent(slug)}"
            class="btn-adm-outline" style="font-size:0.72rem; padding:0.3rem 0.6rem;"
-           target="_blank" rel="noopener"
-           title="Lihat halaman publik kegiatan ini">
-          ${DIcon.external}
-          Lihat
+           target="_blank" rel="noopener" title="Lihat halaman publik kegiatan ini">
+          ${DIcon.external} Lihat
         </a>
       </td>
     </tr>`;
@@ -83,11 +76,18 @@ function buildSkeletonRows(n = 5) {
   return Array.from({ length: n }, row).join('');
 }
 
-// ── Sidebar toggle (mobile) ─────────────────────────────────
+// ── Sidebar toggle (desktop + mobile) ──────────────────────
 function initSidebar() {
-  const sidebar  = document.getElementById('adm-sidebar');
-  const overlay  = document.getElementById('adm-overlay');
+  const sidebar    = document.getElementById('adm-sidebar');
+  const overlay    = document.getElementById('adm-overlay');
+  const content    = document.getElementById('adm-content');
   const toggleBtns = document.querySelectorAll('.adm-topbar-toggle');
+  const COLLAPSED_KEY = 'sgw_sidebar_collapsed';
+
+  function applyCollapsed(collapsed) {
+    sidebar?.classList.toggle('collapsed', collapsed);
+    content?.classList.toggle('sidebar-collapsed', collapsed);
+  }
 
   function openSidebar() {
     sidebar?.classList.add('open');
@@ -102,15 +102,25 @@ function initSidebar() {
   }
 
   toggleBtns.forEach(btn => btn.addEventListener('click', () => {
-    sidebar?.classList.contains('open') ? closeSidebar() : openSidebar();
+    if (window.innerWidth <= 768) {
+      sidebar?.classList.contains('open') ? closeSidebar() : openSidebar();
+    } else {
+      const next = !sidebar?.classList.contains('collapsed');
+      applyCollapsed(next);
+      try { localStorage.setItem(COLLAPSED_KEY, next ? '1' : '0'); } catch { /* ignore */ }
+    }
   }));
 
   overlay?.addEventListener('click', closeSidebar);
 
-  // Close on resize to desktop
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) closeSidebar();
   });
+
+  // Restore state dari localStorage
+  try {
+    if (localStorage.getItem(COLLAPSED_KEY) === '1') applyCollapsed(true);
+  } catch { /* ignore */ }
 }
 
 // ── Logout ──────────────────────────────────────────────────
@@ -128,36 +138,27 @@ function initLogout() {
 // ── Main init ────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
 
-  // 1. Auth guard — redirect ke login.html jika belum login
   const ok = await Auth.guard();
   if (!ok) return;
 
-  // 2. Listen session changes (mis. expired di tab lain)
   Auth.initListener();
 
-  // 3. Sidebar + logout
   initSidebar();
   initLogout();
 
-  // 4. Tampilkan email user di topbar
   const userEmailEl = document.getElementById('adm-user-email');
   try {
     const user = await Auth.getCurrentUser();
     if (user && userEmailEl) userEmailEl.textContent = user.email;
-  } catch {
-    // Tidak kritis, biarkan kosong
-  }
+  } catch { /* tidak kritis */ }
 
-  // 5. Overview cards — set loading state dulu
   document.getElementById('stat-years')?.classList.add('loading');
   document.getElementById('stat-activities')?.classList.add('loading');
   document.getElementById('stat-photos')?.classList.add('loading');
 
-  // 6. Recent activities — tampilkan skeleton dulu
   const tbody = document.getElementById('recent-tbody');
   if (tbody) tbody.innerHTML = buildSkeletonRows(5);
 
-  // 7. Fetch stats
   try {
     const stats = await DB.getStats();
     setCardNum('stat-years',      stats.totalYears);
@@ -170,7 +171,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setCardNum('stat-photos',     'Err');
   }
 
-  // 8. Fetch recent activities
   try {
     const recent = await DB.getRecentActivities(5);
     if (tbody) tbody.innerHTML = buildTableRows(recent);
@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     </td></tr>`;
   }
 
-  // 9. Footer year
   const fyEl = document.getElementById('footer-year');
   if (fyEl) fyEl.textContent = new Date().getFullYear();
 });

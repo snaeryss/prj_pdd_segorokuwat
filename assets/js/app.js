@@ -1,21 +1,26 @@
 /**
  * app.js — Landing Page Logic
  * Segorokuwat Website
- *
- * Handles: navbar behavior, activity cards render,
- * Supabase data fetch, AOS animations, scroll-to-top.
  */
 
-// ── Constants ──────────────────────────────────────────────
 const RECENT_LIMIT = 6;
 
-// ── Icon helpers (inline SVG, no external dep) ─────────────
 const Icons = {
-  arrowRight:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
-  image:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
-  calendar:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
-  photos:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+  arrowRight: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  image:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+  calendar:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  photos:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
 };
+
+// ── Fisher-Yates Shuffle ────────────────────────────────────
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 // ── Navbar ──────────────────────────────────────────────────
 function initNavbar() {
@@ -26,8 +31,8 @@ function initNavbar() {
   if (!navbar) return;
 
   function updateNavbarState() {
-    const scrollY     = window.scrollY;
-    const heroBottom  = hero ? hero.offsetTop + hero.offsetHeight : 0;
+    const scrollY    = window.scrollY;
+    const heroBottom = hero ? hero.offsetTop + hero.offsetHeight : 0;
     navbar.classList.toggle('scrolled', scrollY > 60);
     navbar.classList.toggle('on-light', heroBottom > 0 && scrollY > heroBottom - 80);
   }
@@ -57,7 +62,6 @@ function initNavbar() {
     });
   }
 
-  // Mark active link
   const path = window.location.pathname;
   document.querySelectorAll('.nav-link-pub').forEach(link => {
     const href = link.getAttribute('href');
@@ -83,7 +87,6 @@ function buildSkeletons(count = 6) {
 }
 
 // ── Activity Card ───────────────────────────────────────────
-// Menerima coverUrl yang sudah diresolved (termasuk rotating cover)
 function buildActivityCardHtml(activity, coverUrl, delay = 0) {
   const year       = activity.year?.year || '';
   const name       = activity.name || 'Kegiatan';
@@ -91,11 +94,8 @@ function buildActivityCardHtml(activity, coverUrl, delay = 0) {
   const photoCount = Array.isArray(activity.photos) ? (activity.photos[0]?.count ?? 0) : 0;
 
   const thumbContent = coverUrl
-    ? `<img src="${coverUrl}" alt="${name}" loading="lazy"
-           onerror="this.onerror=null; this.src='${GDrive.FALLBACK_IMAGE}'" />`
-    : `<div class="activity-card-thumb-placeholder">${Icons.image}
-         <span style="font-size:0.75rem;font-weight:500;">Belum ada foto</span>
-       </div>`;
+    ? `<img src="${coverUrl}" alt="${name}" loading="lazy" onerror="this.onerror=null; this.src='${GDrive.FALLBACK_IMAGE}'" />`
+    : `<div class="activity-card-thumb-placeholder">${Icons.image}<span style="font-size:0.75rem;font-weight:500;">Belum ada foto</span></div>`;
 
   const meta = [];
   if (year) meta.push(`<span class="activity-card-meta-item">${Icons.calendar} ${year}</span>`);
@@ -131,24 +131,25 @@ function buildEmptyState() {
     </div>`;
 }
 
-// ── Load Activities ─────────────────────────────────────────
+// ── Load Activities (shuffle per refresh, max 6) ────────────
 async function loadRecentActivities() {
-  const grid        = document.getElementById('recent-activities-grid');
-  const statYears   = document.getElementById('stat-years');
-  const statActs    = document.getElementById('stat-activities');
-  const statPhotos  = document.getElementById('stat-photos');
+  const grid       = document.getElementById('recent-activities-grid');
+  const statYears  = document.getElementById('stat-years');
+  const statActs   = document.getElementById('stat-activities');
+  const statPhotos = document.getElementById('stat-photos');
   if (!grid) return;
 
   grid.innerHTML = buildSkeletons(RECENT_LIMIT);
 
   try {
-    const all        = await DB.getActivities();
-    const activities = all.slice(0, RECENT_LIMIT);
+    const all = await DB.getActivities();
+
+    // Shuffle semua kegiatan lalu ambil 6 — setiap refresh urutan & pilihan beda
+    const activities = shuffleArray(all).slice(0, RECENT_LIMIT);
 
     if (!activities.length) {
       grid.innerHTML = buildEmptyState();
     } else {
-      // Resolve cover per kegiatan secara paralel (rotating session cover)
       const covers = await Promise.all(
         activities.map(a => GDrive.getSessionCover(a).catch(() => null))
       );

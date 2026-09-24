@@ -393,67 +393,15 @@ input, textarea, select { font-family: var(--font-primary); }
   display: flex;
   flex-direction: column;
   z-index: 900;
-  transition: width 0.25s ease, transform 0.25s ease;
+  transition: transform 0.25s ease;
 }
 
-/* Desktop collapsed — icon only */
+/* Desktop: hidden saat collapsed */
 .adm-sidebar.collapsed {
-  width: 56px;
+  transform: translateX(-220px);
 }
 
-.adm-sidebar.collapsed .adm-nav-label,
-.adm-sidebar.collapsed .adm-nav-link span,
-.adm-sidebar.collapsed .adm-sidebar-divider {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.adm-sidebar.collapsed .adm-nav-link {
-  padding: 0.65rem 0;
-  justify-content: center;
-  gap: 0;
-  border-left: 3px solid transparent;
-}
-
-.adm-sidebar.collapsed .adm-nav-item.active > .adm-nav-link {
-  border-left-color: var(--adm-accent);
-}
-
-.adm-sidebar.collapsed .adm-nav-link svg {
-  width: 18px;
-  height: 18px;
-  opacity: 0.7;
-  flex-shrink: 0;
-}
-
-.adm-sidebar.collapsed .adm-nav-item:hover > .adm-nav-link svg {
-  opacity: 1;
-}
-
-/* Tooltip saat collapsed */
-.adm-sidebar.collapsed .adm-nav-item {
-  position: relative;
-}
-
-.adm-sidebar.collapsed .adm-nav-item:hover::after {
-  content: attr(data-label);
-  position: absolute;
-  left: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--adm-black);
-  color: var(--adm-white);
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.35rem 0.7rem;
-  border-radius: var(--radius-md);
-  white-space: nowrap;
-  z-index: 9999;
-  pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-}
-
-/* Content menyesuaikan lebar sidebar */
+/* Content menyesuaikan */
 .adm-content {
   margin-left: 220px;
   margin-top: 56px;
@@ -463,9 +411,9 @@ input, textarea, select { font-family: var(--font-primary); }
   transition: margin-left 0.25s ease;
 }
 
-.adm-sidebar.collapsed ~ .adm-content,
-body.sidebar-collapsed .adm-content {
-  margin-left: 56px;
+.adm-sidebar.collapsed + * + .adm-content,
+.adm-content.sidebar-collapsed {
+  margin-left: 0;
 }
 
 .adm-nav {
